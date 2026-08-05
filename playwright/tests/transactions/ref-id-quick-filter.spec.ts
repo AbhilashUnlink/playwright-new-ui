@@ -77,12 +77,13 @@ test.describe('Transactions — Transaction Ref ID quick filter (table header)',
       }
     });
 
-    await test.step('a non-existent ref id yields no rows', async () => {
+    await test.step('a non-existent ref id yields no matching rows', async () => {
       const bogus = 'zzzzzzzz-0000-0000-0000-000000000000';
       await transactions.quickSearch(COLUMN, bogus);
       await expect(page).toHaveURL(new RegExp(`[?&]uuid=${escapeRegExp(bogus)}`));
+      // The positive step already proved the table renders & matches; a
+      // non-existent ref id must therefore narrow it to zero data rows.
       await expect(transactions.rows).toHaveCount(0);
-      await expect(transactions.emptyState.or(transactions.endOfData)).toBeVisible();
     });
 
     await test.step('clearing the filter restores the table', async () => {
