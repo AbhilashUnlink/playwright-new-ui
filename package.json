@@ -1,0 +1,18 @@
+{
+  "name": "das-gateway-e2e",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "test": "playwright test --config=playwright/playwright.config.ts --ui",
+    "test:no-ui": "playwright test --config=playwright/playwright.config.ts",
+    "test:e2e:report": "playwright show-report playwright/reports/html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^24.12.2",
+    "dotenv": "^17.4.2",
+    "typescript": "~6.0.2"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "signUp": {
+    "firstName": "PO",
+    "lastName": "Tester",
+    "businessLocation": "JP",
+    "phone": "9012345678",
+    "email": "po-e2e-merchant-{{unique}}@example.com"
+  },
+  "businessDetails": {
+    "companyType": "company limited",
+    "companyName": "PO E2E Merchant K.K. {{unique}}",
+    "registrationNumber": "E2E-REG-{{unique}}",
+    "incorporationDate": "today",
+    "registeredAddress": "1-1 Test Building, Shibuya",
+    "city": "Tokyo",
+    "postcode": "1500001",
+    "doingBusinessAs": "PO E2E Store",
+    "corporateWebsite": "https://po-e2e.example.com",
+    "mailingAddress": null
+  },
+  "stakeholder": {
+    "firstName": "PO",
+    "middleName": "E2E",
+    "lastName": "Tester",
+    "dob": { "yearsOffset": -25 },
+    "phone": "9012345678",
+    "nationality": "JP",
+    "ubo": true,
+    "ownershipPercentage": "100",
+    "authorizedSignatory": true,
+    "countryOfResidence": "JP",
+    "postcode": "1500001",
+    "address": "1-1 Test Building, Shibuya",
+    "city": "Tokyo",
+    "identificationType": "passport",
+    "identificationId": "E2E-PASS-{{unique}}",
+    "identificationIssuedDate": { "yearsOffset": -1 },
+    "identificationExpDate": { "yearsOffset": 5 }
+  },
+  "payout": {
+    "accountNumber": "12345678",
+    "accountType": "savings",
+    "settlementCurrency": "jpy",
+    "paymentFrequency": "Weekly",
+    "bankName": "PO E2E Bank",
+    "bankCode": "POE0001",
+    "bankCountry": "local",
+    "branchCode": "BR0001",
+    "bankAccountName": "PO E2E Merchant K.K."
+  },
+  "paymentMethods": {
+    "hasHpp": true,
+    "website": "https://po-e2e.example.com",
+    "describeProduct": "Digital goods and online services.",
+    "transactionalCountries": ["JP"],
+    "maximumTransactionAmount": "100000",
+    "averageTransactionAmount": "5000",
+    "totalAnnualProjectionAmount": "1000000"
+  }
+}

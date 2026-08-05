@@ -1,0 +1,4 @@
+.env
+reports/
+playwright-report/
+test-results/

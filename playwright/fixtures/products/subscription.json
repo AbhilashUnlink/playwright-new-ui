@@ -1,0 +1,21 @@
+{
+  "filters": {
+    "merchantName": "Casinova Test pvt. Ltd",
+    "productType": "SUBSCRIPTION"
+  },
+  "plan": {
+    "planName": "Sub e2e plan",
+    "billingCycle": "Monthly",
+    "currency": "HKD",
+    "amount": "10.00",
+    "comments": "Created by Playwright e2e"
+  },
+  "subscription": {
+    "firstName": "E2E",
+    "lastName": "Subscriber",
+    "email": "e2e.subscriber@example.com",
+    "startDate": "Immediately",
+    "endDate": "Forever",
+    "notifyCustomer": false
+  }
+}

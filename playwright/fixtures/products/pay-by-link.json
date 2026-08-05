@@ -1,0 +1,15 @@
+{
+  "filters": {
+    "merchantName": "Casinova Test pvt. Ltd",
+    "productType": "PBL"
+  },
+  "items": [
+    {
+      "productName": "PBL e2e item",
+      "quantity": "1",
+      "price": "10.00",
+      "currency": "HKD"
+    }
+  ],
+  "linkName": "PBL e2e link"
+}

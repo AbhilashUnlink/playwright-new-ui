@@ -1,0 +1,52 @@
+{
+  "signUp": {
+    "firstName": "PO",
+    "lastName": "Reseller",
+    "businessLocation": "JP",
+    "phone": "9012345678",
+    "email": "po-e2e-partner-{{unique}}@example.com"
+  },
+  "businessDetails": {
+    "companyType": "sole proprietor",
+    "thirdPartyType": "referrers",
+    "companyName": "PO E2E Partner SOLE K.K. {{unique}}",
+    "doingBusinessAs": "PO E2E Reseller Brand",
+    "registrationNumber": "E2E-PRT-{{unique}}",
+    "operationalCountry": "JP",
+    "natureOfBusiness": "financial services",
+    "incorporationDate": "today",
+    "postcode": "1500001",
+    "city": "Tokyo",
+    "registeredAddress": "1-1 Test Building, Shibuya",
+    "mailingAddress": null
+  },
+  "stakeholder": {
+    "firstName": "PO",
+    "middleName": "E2E",
+    "lastName": "Tester",
+    "dob": { "yearsOffset": -25 },
+    "phone": "9012345678",
+    "nationality": "JP",
+    "ubo": true,
+    "ownershipPercentage": "100",
+    "authorizedSignatory": true,
+    "countryOfResidence": "JP",
+    "postcode": "1500001",
+    "address": "1-1 Test Building, Shibuya",
+    "city": "Tokyo",
+    "identificationType": "passport",
+    "identificationId": "E2E-PASS-{{unique}}",
+    "identificationIssuedDate": { "yearsOffset": -1 },
+    "identificationExpDate": { "yearsOffset": 5 }
+  },
+  "payout": {
+    "accountNumber": "12345678",
+    "accountType": "savings",
+    "settlementCurrency": "jpy",
+    "bankName": "PO E2E Bank",
+    "bankCode": "POE0001",
+    "bankCountry": "local",
+    "branchCode": "BR0001",
+    "bankAccountName": "PO E2E Partner SOLE K.K."
+  }
+}
