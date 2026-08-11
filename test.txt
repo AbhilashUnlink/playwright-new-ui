@@ -1,1 +1,7 @@
-this is a test file
+git branch -a
+
+git branch "branch name"
+
+git checkout "branch name"
+
+git checkout -b "branch"
