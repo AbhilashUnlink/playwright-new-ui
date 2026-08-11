@@ -148,9 +148,95 @@ export class TransactionsPage {
       .first();
   }
 
-  /** The text box inside the open quick-search dialog. */
+  /** The single input inside the open quick-search dialog (text box or date-range field). */
   get quickSearchInput(): Locator {
-    return this.quickSearchDialog.locator('input[type="text"]').first();
+    return this.quickSearchDialog.locator('input').first();
+  }
+
+  /**
+   * Map every filterable column label → its cell position `{ td, line }`. Header
+   * `th` index equals body `td` index; a `th` stacking N columns yields N labels
+   * at line 0..N-1 of the same `td`. Built live from the header so it tracks
+   * whatever columns the app renders.
+   */
+  async columnFieldMap(): Promise<Record<string, { td: number; line: number }>> {
+    return this.page.evaluate(() => {
+      const map: Record<string, { td: number; line: number }> = {};
+      document.querySelectorAll('table thead th').forEach((th, td) => {
+        th.querySelectorAll('button[data-column-search-trigger]').forEach((b, line) => {
+          const label = (b.getAttribute('aria-label') || '').replace(/^Filter\s+/, '');
+          if (label) map[label] = { td, line };
+        });
+      });
+      return map;
+    });
+  }
+
+  /**
+   * A column's value in a given row: the `span[title]` full value when present
+   * (IDs, merchant, terminal, …), else the visible text of that stacked line.
+   */
+  async columnCellValue(
+    rowIndex: number,
+    td: number,
+    line: number
+  ): Promise<{ title: string | null; text: string }> {
+    return this.rows.nth(rowIndex).evaluate(
+      (row, pos) => {
+        const cell = (row as HTMLElement).querySelectorAll('td')[pos.td] as HTMLElement | undefined;
+        if (!cell) return { title: null, text: '' };
+        const titled = cell.querySelectorAll('span[title]');
+        const title = titled[pos.line]?.getAttribute('title') ?? null;
+        const lineDivs = cell.querySelectorAll(':scope > div > div');
+        const text = (lineDivs[pos.line]?.textContent ?? cell.textContent ?? '').trim();
+        return { title, text };
+      },
+      { td, line }
+    );
+  }
+
+  /** Open a column's quick-filter control without asserting its type (text vs date-range). */
+  async openColumnFilter(columnLabel: string) {
+    const trigger = this.columnFilterTrigger(columnLabel);
+    await trigger.scrollIntoViewIfNeeded();
+    await trigger.click();
+    await expect(this.quickSearchDialog).toBeVisible();
+    // Let the dialog's input mount (it animates in) before callers inspect it.
+    await this.quickSearchInput.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+  }
+
+  /** The placeholder of the open dialog's input — `Search <col>…` (text) or `Select date range…`. */
+  async quickSearchPlaceholder(): Promise<string> {
+    return (await this.quickSearchInput.getAttribute('placeholder')) ?? '';
+  }
+
+  /**
+   * Classify the control the open dialog exposes without ever hanging (checks
+   * for an input first, so a control that has none returns promptly):
+   *   • `text`   — a free-text "Search <col>…" box (returns its placeholder)
+   *   • `date`   — a "Select date range…" picker
+   *   • `picker` — an options list (enums: Transaction Type, Status, …)
+   */
+  async quickSearchControlKind(): Promise<{ kind: 'text' | 'date' | 'picker'; hint: string }> {
+    // Give the dialog's control a moment to mount (it animates in).
+    await this.quickSearchInput.waitFor({ state: 'visible', timeout: 3500 }).catch(() => {});
+    if ((await this.quickSearchInput.count()) > 0) {
+      const ph = (await this.quickSearchInput.getAttribute('placeholder')) ?? '';
+      return { kind: /date range/i.test(ph) ? 'date' : 'text', hint: ph };
+    }
+    const txt = (await this.quickSearchDialog.innerText().catch(() => '')).replace(/\s+/g, ' ').trim();
+    return { kind: /date range/i.test(txt) ? 'date' : 'picker', hint: txt.slice(0, 100) };
+  }
+
+  /** Close the open quick-search dialog via its Close button (Escape as fallback). */
+  async closeQuickSearch() {
+    const closeBtn = this.quickSearchDialog.getByRole('button', { name: /^close$/i }).first();
+    if (await closeBtn.count()) {
+      await closeBtn.click();
+    } else {
+      await this.page.keyboard.press('Escape');
+    }
+    await expect(this.quickSearchDialog).toBeHidden();
   }
 
   /**
